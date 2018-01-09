@@ -1,14 +1,7 @@
-<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../polymer/polymer-element.html">
 
 <dom-module id="custom-element">
-    <template>
-        <style>
-            :host {
-                @apply(--flex);
-                @apply(--flex-grow);
-            }
-        </style>
-    </template>
+    <template></template>
     <script>
         class CustomElement extends Polymer.Element {
             static get is() {
@@ -17,21 +10,41 @@
 
             static get properties() {
                 return {
+                    // Base directory
+                    _baseDir: {
+                        type: String,
+                        value: '../../src/components'
+                    },
+                    // The directory that holds the element
                     src: {
                         type: String
                     },
+                    // The elements tag name
                     tag: {
                         type: String
+                    },
+                    // Object
+                    element: {
+                        type: Object
                     }
                 }
             }
 
             ready() {
                 super.ready();
-                Polymer.importHref(this.resolveUrl(this.tag + '.html'), function (e) {
-                    console.log(e);
-                    let b = document.createElement(this.tag);
-                    this.shadowRoot.appendChild(b);
+                console.log('here');
+                if(this.element) {
+                    this.src = this.element.src;
+                    this.tag = this.element.tag;
+                }
+                if(!this.src) {
+                    // this.src = 'src/components';
+                }
+                console.log(this.src);
+                console.log(this.tag);
+                Polymer.importHref(this.resolveUrl('../../../' + this._baseDir + '/' + this.src + '/' + this.tag + '.html'), function () {
+                    let e = document.createElement(this.tag);
+                    this.shadowRoot.appendChild(e);
                 }.bind(this));
             }
         }
