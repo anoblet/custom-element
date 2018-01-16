@@ -19,7 +19,8 @@
                     },
                     // The directory that holds the element
                     src: {
-                        type: String
+                        type: String,
+                        value: ''
                     },
                     // The elements tag name
                     tag: {
@@ -45,8 +46,10 @@
                         this.src = this.src + "/"
                     }
                 }
+                else {
+                    this.src = '';
+                }
 
-                // Polymer.importHref(this.resolveUrl(this._baseDir + '/' + (this.src ? this.src + '/' : '') + this.tag + '.html'), function () {
                 Polymer.importHref(this.resolveUrl(this._baseDir + '/' + this.src + this.tag + '.html'), function () {
                     let e = document.createElement(this.tag);
                     this.shadowRoot.appendChild(e);
